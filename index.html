@@ -337,15 +337,7 @@
     */
 
     function nombreDeJoursDisponibles() {
-      const maintenant = new Date();
-      const mois = maintenant.getMonth(); // Janvier = 0, décembre = 11
-      const jour = maintenant.getDate();
 
-      if (mois < 11) {
-        return 0;
-      }
-
-      if (mois > 11) {
         return 24;
       }
 
