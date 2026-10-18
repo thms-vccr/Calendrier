@@ -30,7 +30,7 @@ body {
   z-index: -1;
   background:
     linear-gradient(rgba(10,20,16,.45), rgba(10,20,16,.60)),
-    url("images/fond.jpg") center / cover no-repeat;
+    url("fond.jpg") center / cover no-repeat;
 }
 
 .accueil {
@@ -222,7 +222,7 @@ function jourDisponible() {
 
 // CHEMIN DE LA PHOTO DE CHAQUE JOUR
 function cheminPhoto(numero) {
-  return "images/jour-" +
+  return "jour-" +
     String(numero).padStart(2, "0") + ".jpg";
 }
 
