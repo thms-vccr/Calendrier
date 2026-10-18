@@ -1,306 +1,475 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Notre Avent</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f0e8">
+  <title>Notre calendrier de l'Avent</title>
 
-<style>
-:root {
-  --ivoire: #fff9ef;
-  --or: #e9d5a4;
-  --vert: #17231f;
-}
+  <style>
+    :root {
+      --blanc: #fffdf9;
+      --texte: #413b35;
+      --accent: #b48b61;
+      --verrou: rgba(255, 253, 249, 0.75);
+      --ombre: rgba(36, 29, 23, 0.18);
+    }
 
-* {
-  box-sizing: border-box;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--ivoire);
-  font-family: Georgia, "Times New Roman", serif;
-  background: var(--vert);
-}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--texte);
+      background: #f5f0e8;
+    }
 
-.fond {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(rgba(10,20,16,.45), rgba(10,20,16,.60)),
-    url("fond.jpg") center / cover no-repeat;
-}
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.accueil {
-  min-height: 100vh;
-  padding: 28px 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    /* PAGE PRINCIPALE */
 
-.entete {
-  text-align: center;
-  margin-bottom: 15px;
-}
+    #accueil {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      background-color: #e9dfd1;
+      background-image: url("fond.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
 
-.surtitre {
-  color: var(--or);
-  font: 600 11px Arial, sans-serif;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-}
+    .voile {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(30, 25, 20, 0.12),
+        rgba(30, 25, 20, 0.03) 45%,
+        rgba(30, 25, 20, 0.18)
+      );
+      pointer-events: none;
+    }
 
-h1 {
-  font-size: clamp(36px, 6vw, 64px);
-  font-weight: normal;
-  margin: 12px 0;
-}
+    .entete {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 24px 12px 10px;
+      color: white;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+      pointer-events: none;
+    }
 
-.entete p {
-  font-size: 16px;
-}
+    .entete h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 5vw, 2.6rem);
+      font-weight: normal;
+      letter-spacing: 0.04em;
+    }
 
-.calendrier {
-  position: relative;
-  width: min(100%, 1000px);
-  height: min(70vh, 700px);
-  min-height: 440px;
-}
+    .entete p {
+      margin: 8px 0 0;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+    }
 
-.case {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  transform: translate(-50%, -50%);
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(255,255,255,.8);
-  border-radius: 50%;
-  background: rgba(23,35,31,.78);
-  color: white;
-  cursor: pointer;
-  font: 14px Arial, sans-serif;
-  transition: .2s;
-}
+    #calendrier {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+    }
 
-.case:hover:not(:disabled) {
-  transform: translate(-50%, -50%) scale(1.13);
-  background: var(--or);
-  color: var(--vert);
-}
+    .case {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: clamp(36px, 8.5vw, 58px);
+      height: clamp(36px, 8.5vw, 58px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      background: var(--verrou);
+      color: var(--texte);
+      box-shadow: 0 3px 12px var(--ombre);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(14px, 3.5vw, 19px);
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+    }
 
-.case:disabled {
-  opacity: .55;
-  cursor: not-allowed;
-  border-style: dashed;
-}
+    .case.ouverte {
+      background: rgba(255, 253, 249, 0.94);
+      border-color: var(--accent);
+    }
 
-.pied {
-  margin-top: 18px;
-  font: 12px Arial, sans-serif;
-  text-align: center;
-}
+    .case:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 3px;
+    }
 
-.decouverte {
-  min-height: 100vh;
-  padding: 25px 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
+    .case:not(:disabled):hover {
+      transform: translate(-50%, -50%) scale(1.12);
+      box-shadow: 0 5px 18px rgba(36, 29, 23, 0.28);
+    }
 
-.photo-cadre {
-  width: min(94vw, 850px);
-  padding: 8px;
-  background: var(--ivoire);
-  box-shadow: 0 15px 50px #0008;
-}
+    .case:disabled {
+      cursor: default;
+      opacity: 0.72;
+    }
 
-.photo-cadre img {
-  display: block;
-  width: 100%;
-  max-height: 68vh;
-  object-fit: contain;
-}
+    .pied {
+      position: absolute;
+      z-index: 1;
+      bottom: 14px;
+      left: 10px;
+      right: 10px;
+      text-align: center;
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      text-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+      pointer-events: none;
+    }
 
-.retour {
-  margin-top: 24px;
-  padding: 12px 20px;
-  color: var(--ivoire);
-  border: 1px solid var(--ivoire);
-  border-radius: 30px;
-  text-decoration: none;
-  font: 13px Arial, sans-serif;
-  background: rgba(23,35,31,.8);
-}
+    /* PAGE PHOTO */
 
-.retour:hover {
-  background: var(--or);
-  color: var(--vert);
-}
+    #page-photo {
+      min-height: 100vh;
+      display: none;
+      padding: 24px 16px 36px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 22px;
+      background: #f5f0e8;
+    }
 
-.cache {
-  display: none !important;
-}
+    .photo-cadre {
+      width: min(100%, 850px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-@media (max-width: 500px) {
-  .calendrier {
-    height: 65vh;
-    min-height: 430px;
-  }
+    #photo-jour {
+      display: block;
+      max-width: 100%;
+      max-height: 75vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 3px;
+      box-shadow: 0 8px 30px rgba(45, 35, 25, 0.12);
+    }
 
-  .case {
-    width: 34px;
-    height: 34px;
-    font-size: 11px;
-  }
-}
-</style>
+    .retour {
+      display: inline-block;
+      padding: 12px 20px;
+      border: 1px solid #c9b59c;
+      border-radius: 30px;
+      color: var(--texte);
+      background: transparent;
+      text-decoration: none;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      transition: background 0.2s ease;
+    }
+
+    .retour:hover {
+      background: rgba(180, 139, 97, 0.12);
+    }
+
+    #message {
+      display: none;
+      text-align: center;
+      padding: 25px;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    #message h2 {
+      font-weight: normal;
+    }
+
+    @media (max-width: 600px) {
+      .entete {
+        padding-top: 18px;
+      }
+
+      .case {
+        width: 38px;
+        height: 38px;
+      }
+
+      #photo-jour {
+        max-height: 78vh;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="fond"></div>
+  <!-- ACCUEIL DU CALENDRIER -->
 
-<!-- PAGE D'ACCUEIL -->
-<main id="accueil" class="accueil">
-  <header class="entete">
-    <div class="surtitre">24 jours · 24 souvenirs</div>
-    <h1>Notre Avent</h1>
-    <p>Un petit souvenir à découvrir chaque jour.</p>
-  </header>
+  <main id="accueil">
+    <div class="voile"></div>
 
-  <section id="calendrier"
-           class="calendrier"
-           aria-label="Calendrier de l'Avent">
+    <header class="entete">
+      <h1>Notre calendrier de l'Avent</h1>
+      <p>24 jours, 24 souvenirs</p>
+    </header>
+
+    <div id="calendrier" aria-label="Calendrier de l'Avent"></div>
+
+    <div class="pied">
+      Un souvenir se dévoile chaque jour
+    </div>
+  </main>
+
+  <!-- PAGE INDIVIDUELLE D'UNE PHOTO -->
+
+  <section id="page-photo" aria-label="Souvenir du jour">
+    <div class="photo-cadre">
+      <img id="photo-jour" src="" alt="Notre souvenir du jour">
+    </div>
+
+    <a class="retour" href="./">
+      ← Retour au calendrier
+    </a>
   </section>
 
-  <footer class="pied">
-    ♥ Avec tendresse, pour toi ♥
-  </footer>
-</main>
+  <!-- MESSAGE EN CAS DE JOUR NON DISPONIBLE OU D'ERREUR -->
 
-<!-- PAGE PHOTO -->
-<main id="decouverte" class="decouverte cache">
-  <div class="surtitre" id="date"></div>
-  <h1>Le souvenir du jour</h1>
+  <section id="message">
+    <h2 id="message-titre">Ce souvenir n'est pas encore disponible</h2>
+    <p id="message-texte">
+      Reviens découvrir ce souvenir le moment venu.
+    </p>
+    <a class="retour" href="./">
+      ← Retour au calendrier
+    </a>
+  </section>
 
-  <div class="photo-cadre">
-    <img id="photo" src="" alt="Notre souvenir">
-  </div>
+  <script>
+    /*
+      CONFIGURATION DES 24 CASES
 
-  <a class="retour" id="retour" href="./">
-    ← Retour au calendrier
-  </a>
-  <p id="message" role="status"></p>
-</main>
+      Chaque position est exprimée en pourcentage :
+      [position horizontale, position verticale]
 
-<script>
-// POSITION DES 24 CASES SUR LA PHOTO DE FOND
-// x = position horizontale en %, y = position verticale en %
-const positions = [
-  [10,15], [27,12], [44,19], [63,12], [82,17], [94,30],
-  [16,34], [34,31], [53,36], [72,31], [88,45], [8,53],
-  [25,51], [44,57], [63,51], [80,59], [94,68], [14,74],
-  [32,77], [50,72], [68,79], [84,82], [38,92], [61,92]
-];
+      0 = bord gauche ou haut
+      100 = bord droit ou bas
 
-// DATE DU JOUR : du 1er au 24 décembre
-function jourDisponible() {
-  const maintenant = new Date();
+      Tu peux modifier ces coordonnées pour placer les cases
+      aux endroits qui te plaisent sur ta photo.
+    */
 
-  if (maintenant.getMonth() < 11) return 0;
-  if (maintenant.getMonth() > 11) return 24;
+    const positions = [
+      [15, 23],
+      [36, 17],
+      [65, 22],
+      [84, 30],
+      [25, 37],
+      [49, 31],
+      [73, 41],
+      [12, 48],
+      [39, 49],
+      [60, 52],
+      [88, 53],
+      [22, 62],
+      [47, 64],
+      [70, 62],
+      [34, 74],
+      [56, 76],
+      [82, 72],
+      [13, 81],
+      [43, 85],
+      [66, 87],
+      [91, 84],
+      [28, 91],
+      [52, 94],
+      [76, 94]
+    ];
 
-  return 24;
-}
+    const accueil = document.getElementById("accueil");
+    const calendrier = document.getElementById("calendrier");
+    const pagePhoto = document.getElementById("page-photo");
+    const photoJour = document.getElementById("photo-jour");
+    const message = document.getElementById("message");
+    const messageTitre = document.getElementById("message-titre");
+    const messageTexte = document.getElementById("message-texte");
 
-// CHEMIN DE LA PHOTO DE CHAQUE JOUR
-function cheminPhoto(numero) {
-  return "jour-" +
-    String(numero).padStart(2, "0") + ".jpg";
-}
+    /*
+      DATE DE DÉBLOCAGE
 
-// CRÉATION DES 24 CASES
-const calendrier = document.getElementById("calendrier");
+      Du 1er au 24 décembre :
+      le numéro du jour correspond au jour du mois.
 
-positions.forEach((position, index) => {
-  const numero = index + 1;
-  const bouton = document.createElement("button");
+      Avant décembre :
+      aucune case n'est disponible.
 
-  bouton.className = "case";
-  bouton.textContent = String(numero).padStart(2, "0");
+      À partir du 24 décembre :
+      les 24 cases sont disponibles.
 
-  bouton.style.setProperty("--x", position[0] + "%");
-  bouton.style.setProperty("--y", position[1] + "%");
+      Le contrôle repose sur la date de l'appareil du visiteur.
+    */
 
-  bouton.disabled = numero > jourDisponible();
-  bouton.setAttribute(
-    "aria-label",
-    "Case " + numero
-  );
+    function nombreDeJoursDisponibles() {
+      const maintenant = new Date();
+      const mois = maintenant.getMonth(); // Janvier = 0, décembre = 11
+      const jour = maintenant.getDate();
 
-  bouton.addEventListener("click", () => {
-    if (numero <= jourDisponible()) {
-      window.location.href =
-        "?jour=" + String(numero).padStart(2, "0");
+      if (mois < 11) {
+        return 0;
+      }
+
+      if (mois > 11) {
+        return 24;
+      }
+
+      return Math.min(24, jour);
     }
-  });
 
-  calendrier.appendChild(bouton);
-});
+    function cheminPhoto(numero) {
+      const jour = String(numero).padStart(2, "0");
+      return `jour-${jour}.jpg`;
+    }
 
-// AFFICHAGE DE LA PHOTO DEMANDÉE
-const parametres = new URLSearchParams(
-  window.location.search
-);
-const numero = Number(parametres.get("jour"));
+    function afficherMessage(titre, texte) {
+      accueil.style.display = "none";
+      pagePhoto.style.display = "none";
+      message.style.display = "block";
 
-if (parametres.has("jour")) {
-  document.getElementById("accueil")
-    .classList.add("cache");
+      messageTitre.textContent = titre;
+      messageTexte.textContent = texte;
+    }
 
-  document.getElementById("decouverte")
-    .classList.remove("cache");
+    function afficherPhoto(numero) {
+      if (!Number.isInteger(numero) || numero < 1 || numero > 24) {
+        afficherMessage(
+          "Souvenir introuvable",
+          "Ce numéro ne correspond pas à une case du calendrier."
+        );
+        return;
+      }
 
-  const date = document.getElementById("date");
-  const photo = document.getElementById("photo");
-  const message = document.getElementById("message");
+      const disponibles = nombreDeJoursDisponibles();
 
-  document.getElementById("retour").href =
-    window.location.pathname;
+      if (numero > disponibles) {
+        afficherMessage(
+          "Encore un peu de patience",
+          "Ce souvenir n'est pas encore disponible. Reviens le jour prévu."
+        );
+        return;
+      }
 
-  if (
-    Number.isInteger(numero) &&
-    numero >= 1 &&
-    numero <= jourDisponible()
-  ) {
-    date.textContent =
-      "Le " + numero +
-      (numero === 1 ? "er" : "") +
-      " décembre";
+      accueil.style.display = "none";
+      message.style.display = "none";
+      pagePhoto.style.display = "flex";
 
-    photo.src = cheminPhoto(numero);
+      photoJour.style.display = "block";
+      photoJour.alt = `Souvenir du ${numero} décembre`;
+      photoJour.src = cheminPhoto(numero);
 
-    photo.onerror = () => {
-      message.textContent =
-        "Ajoute la photo jour-" +
-        String(numero).padStart(2, "0") +
-        ".jpg dans le dossier images.";
-    };
-  } else {
-    date.textContent = "Encore un peu de patience";
-    photo.classList.add("cache");
-    message.textContent =
-      "Cette case n'est pas encore disponible.";
-  }
-}
-</script>
+      photoJour.onerror = function () {
+        photoJour.style.display = "none";
+        afficherMessage(
+          "Photo introuvable",
+          "Vérifie que le fichier " + cheminPhoto(numero) +
+          " a bien été ajouté au dépôt GitHub."
+        );
+      };
+    }
+
+    function creerCalendrier() {
+      const disponibles = nombreDeJoursDisponibles();
+
+      positions.forEach((position, index) => {
+        const numero = index + 1;
+        const bouton = document.createElement("button");
+
+        bouton.type = "button";
+        bouton.className = "case";
+        bouton.textContent = numero;
+        bouton.style.left = position[0] + "%";
+        bouton.style.top = position[1] + "%";
+
+        if (numero <= disponibles) {
+          bouton.classList.add("ouverte");
+          bouton.setAttribute(
+            "aria-label",
+            `Ouvrir le souvenir du ${numero} décembre`
+          );
+        } else {
+          bouton.disabled = true;
+          bouton.setAttribute(
+            "aria-label",
+            `Case ${numero}, disponible le ${numero} décembre`
+          );
+          bouton.title = "Disponible le " + numero + " décembre";
+        }
+
+        bouton.addEventListener("click", function () {
+          if (numero <= nombreDeJoursDisponibles()) {
+            window.location.href = "?jour=" + numero;
+          }
+        });
+
+        calendrier.appendChild(bouton);
+      });
+    }
+
+    function demarrer() {
+      const parametres = new URLSearchParams(window.location.search);
+      const jourParametre = parametres.get("jour");
+
+      if (jourParametre !== null) {
+        const numero = Number(jourParametre);
+
+        if (
+          jourParametre.trim() === "" ||
+          !Number.isInteger(numero) ||
+          numero < 1 ||
+          numero > 24
+        ) {
+          afficherMessage(
+            "Lien invalide",
+            "Ce lien ne correspond pas à un souvenir du calendrier."
+          );
+          return;
+        }
+
+        afficherPhoto(numero);
+        return;
+      }
+
+      creerCalendrier();
+    }
+
+    demarrer();
+  </script>
 
 </body>
 </html>
