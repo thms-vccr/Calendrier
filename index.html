@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html><html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f5f0e8">
-  <title>Notre calendrier de l'Avent</title>
-
-  <style>
+  <title>Notre calendrier de l'Avent</title>  <style>
     :root {
       --blanc: #fffdf9;
       --texte: #413b35;
@@ -27,7 +24,10 @@
 
     button, a { -webkit-tap-highlight-color: transparent; }
 
-    /* PAGE PRINCIPALE */
+    /* =========================
+       PAGE PRINCIPALE
+    ========================== */
+
     #accueil {
       min-height: 100vh;
       position: relative;
@@ -53,7 +53,7 @@
 
     .entete {
       position: relative;
-      z-index: 1;
+      z-index: 3;
       text-align: center;
       padding: 24px 12px 10px;
       color: white;
@@ -72,6 +72,37 @@
       margin: 8px 0 0;
       font-size: 0.95rem;
       letter-spacing: 0.04em;
+    }
+
+    /* BOUTONS DE LA GALERIE */
+    .boutons-galerie {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px 12px;
+    }
+
+    .bouton-galerie {
+      padding: 8px 13px;
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      background: rgba(255, 253, 249, 0.82);
+      color: var(--texte);
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(36, 29, 23, 0.12);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .bouton-galerie:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 253, 249, 0.98);
     }
 
     #calendrier {
@@ -135,7 +166,10 @@
       pointer-events: none;
     }
 
-    /* PAGE PHOTO ET CARTEL */
+    /* =========================
+       PAGE PHOTO ET CARTEL
+    ========================== */
+
     #page-photo {
       min-height: 100vh;
       display: none;
@@ -165,7 +199,6 @@
       box-shadow: 0 8px 30px rgba(45, 35, 25, 0.12);
     }
 
-    /* CARTEL : centré, encadré fin noir, petit espace après la photo */
     .cartel {
       display: none;
       width: min(100%, 650px);
@@ -219,6 +252,80 @@
 
     .retour:hover { background: rgba(180, 139, 97, 0.12); }
 
+    /* =========================
+       GALERIE DE TRAVAIL
+    ========================== */
+
+    #galerie {
+      min-height: 100vh;
+      display: none;
+      padding: 28px 16px 40px;
+      background: #f5f0e8;
+    }
+
+    .galerie-contenu {
+      width: min(100%, 1000px);
+      margin: 0 auto;
+    }
+
+    .galerie-entete {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .galerie-entete h2 {
+      margin: 0;
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-weight: normal;
+    }
+
+    .galerie-entete p {
+      margin: 8px 0 0;
+      font-size: 0.95rem;
+      color: #746b60;
+    }
+
+    .grille-photos {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .miniature {
+      margin: 0;
+      padding: 8px;
+      background: var(--blanc);
+      border: 1px solid rgba(65, 59, 53, 0.18);
+      box-shadow: 0 4px 15px rgba(45, 35, 25, 0.08);
+    }
+
+    .miniature img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      background: #e9dfd1;
+    }
+
+    .miniature figcaption {
+      padding: 9px 4px 2px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: #746b60;
+    }
+
+    .galerie-retour {
+      display: block;
+      width: fit-content;
+      margin: 28px auto 0;
+    }
+
+    /* =========================
+       MESSAGE
+    ========================== */
+
     #message {
       display: none;
       text-align: center;
@@ -230,62 +337,103 @@
 
     #message h2 { font-weight: normal; }
 
+    @media (min-width: 700px) {
+      .grille-photos {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
     @media (max-width: 600px) {
       .entete { padding-top: 18px; }
       .case { width: 38px; height: 38px; }
-      #page-photo { padding: 18px 12px 28px; gap: 13px; }
+
+      .boutons-galerie {
+        gap: 6px;
+        padding-top: 6px;
+      }
+
+      .bouton-galerie {
+        padding: 7px 10px;
+        font-size: 10px;
+      }
+
+      #page-photo {
+        padding: 18px 12px 28px;
+        gap: 13px;
+      }
+
       #photo-jour { max-height: 62vh; }
       .cartel { padding: 17px 16px 19px; }
       .cartel-texte { font-size: 0.92rem; }
+
+      #galerie {
+        padding: 22px 12px 32px;
+      }
+
+      .grille-photos {
+        gap: 10px;
+      }
+
+      .miniature {
+        padding: 5px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition: none !important; }
     }
-  </style>
-</head>
+  </style></head><body>  <!-- ACCUEIL DU CALENDRIER -->  <main id="accueil">
+    <div class="voile"></div><header class="entete">
+  <h1>Notre calendrier de l'Avent</h1>
+  <p>24 jours, 24 souvenirs</p>
+</header>
 
-<body>
-  <!-- ACCUEIL DU CALENDRIER -->
-  <main id="accueil">
-    <div class="voile"></div>
+<!-- OUTILS DE TRAVAIL : À RETIRER AVANT LA VERSION FINALE -->
+<div class="boutons-galerie" aria-label="Galeries de miniatures">
+  <button class="bouton-galerie" type="button" data-debut="1">
+    Photos 1–8
+  </button>
+  <button class="bouton-galerie" type="button" data-debut="9">
+    Photos 9–16
+  </button>
+  <button class="bouton-galerie" type="button" data-debut="17">
+    Photos 17–24
+  </button>
+</div>
 
-    <header class="entete">
-      <h1>Notre calendrier de l'Avent</h1>
-      <p>24 jours, 24 souvenirs</p>
-    </header>
+<div id="calendrier" aria-label="Calendrier de l'Avent"></div>
+<div class="pied">Un souvenir se dévoile chaque jour</div>
 
-    <div id="calendrier" aria-label="Calendrier de l'Avent"></div>
-    <div class="pied">Un souvenir se dévoile chaque jour</div>
-  </main>
-
-  <!-- PAGE INDIVIDUELLE D'UNE PHOTO -->
-  <section id="page-photo" aria-label="Souvenir du jour">
+  </main>  <!-- PAGE INDIVIDUELLE D'UNE PHOTO -->  <section id="page-photo" aria-label="Souvenir du jour">
     <div class="photo-cadre">
       <img id="photo-jour" src="" alt="Notre souvenir du jour">
-    </div>
+    </div><div id="cartel" class="cartel" aria-live="polite">
+  <div id="cartel-numero" class="cartel-numero"></div>
+  <h2 id="cartel-titre" class="cartel-titre"></h2>
+  <p id="cartel-texte" class="cartel-texte"></p>
+</div>
 
-    <div id="cartel" class="cartel" aria-live="polite">
-      <div id="cartel-numero" class="cartel-numero"></div>
-      <h2 id="cartel-titre" class="cartel-titre"></h2>
-      <p id="cartel-texte" class="cartel-texte"></p>
-    </div>
+<a class="retour" href="./">← Retour au calendrier</a>
 
-    <a class="retour" href="./">← Retour au calendrier</a>
-  </section>
+  </section>  <!-- GALERIE DE MINIATURES -->  <section id="galerie" aria-label="Galerie de photos">
+    <div class="galerie-contenu">
+      <header class="galerie-entete">
+        <h2 id="galerie-titre">Galerie</h2>
+        <p>Miniatures de travail</p>
+      </header>  <div id="grille-photos" class="grille-photos"></div>
 
-  <!-- MESSAGE EN CAS DE JOUR NON DISPONIBLE OU D'ERREUR -->
-  <section id="message">
+  <a class="retour galerie-retour" href="./">
+    ← Retour au calendrier
+  </a>
+</div>
+
+  </section>  <!-- MESSAGE EN CAS DE JOUR NON DISPONIBLE OU D'ERREUR -->  <section id="message">
     <h2 id="message-titre">Ce souvenir n'est pas encore disponible</h2>
     <p id="message-texte">Reviens découvrir ce souvenir le moment venu.</p>
     <a class="retour" href="./">← Retour au calendrier</a>
-  </section>
+  </section>  <script>
 
-  <script>
-    /*
-      CONFIGURATION DES 24 CASES
-      Chaque position : [horizontal, vertical], en pourcentage.
-    */
+    /* CONFIGURATION DES 24 CASES */
     const positions = [
       [15, 23], [36, 17], [65, 22], [84, 30],
       [25, 37], [49, 31], [73, 41], [12, 48],
@@ -295,12 +443,7 @@
       [91, 84], [28, 91], [52, 94], [76, 94]
     ];
 
-    /*
-      CONTENU DES CARTELS
-      Les 24 cartels sont prévus dès maintenant.
-      Tu pourras ajouter un titre et un texte dans chaque entrée.
-      Exemple : 1: { titre: "Notre première escapade", texte: "Quelques mots..." }
-    */
+    /* CONTENU DES CARTELS */
     const cartels = {
       1: { titre: "", texte: "" },
       2: { titre: "", texte: "" },
@@ -328,10 +471,14 @@
       24: { titre: "", texte: "" }
     };
 
+    /* ÉLÉMENTS DES PAGES */
     const accueil = document.getElementById("accueil");
     const calendrier = document.getElementById("calendrier");
     const pagePhoto = document.getElementById("page-photo");
     const photoJour = document.getElementById("photo-jour");
+    const galerie = document.getElementById("galerie");
+    const grillePhotos = document.getElementById("grille-photos");
+    const galerieTitre = document.getElementById("galerie-titre");
     const message = document.getElementById("message");
     const messageTitre = document.getElementById("message-titre");
     const messageTexte = document.getElementById("message-texte");
@@ -342,17 +489,15 @@
     const cartelTexte = document.getElementById("cartel-texte");
 
     /*
-      MODE TEST : les 24 jours sont ouverts.
-      AVANT DE PUBLIER LE CALENDRIER FINAL, remplace cette fonction
-      par la version de déblocage par date indiquée plus bas.
+      MODE TEST
+      Les 24 jours sont actuellement ouverts.
     */
     function nombreDeJoursDisponibles() {
       return 24;
     }
 
     /*
-      VERSION FINALE À UTILISER EN DÉCEMBRE :
-      Remplace la fonction ci-dessus par celle-ci :
+      VERSION FINALE POUR DÉCEMBRE :
 
       function nombreDeJoursDisponibles() {
         const maintenant = new Date();
@@ -370,11 +515,14 @@
     function afficherMessage(titre, texte) {
       accueil.style.display = "none";
       pagePhoto.style.display = "none";
+      galerie.style.display = "none";
       message.style.display = "block";
+
       messageTitre.textContent = titre;
       messageTexte.textContent = texte;
     }
 
+    /* AFFICHAGE D'UNE PHOTO */
     function afficherPhoto(numero) {
       if (!Number.isInteger(numero) || numero < 1 || numero > 24) {
         afficherMessage(
@@ -385,6 +533,7 @@
       }
 
       const disponibles = nombreDeJoursDisponibles();
+
       if (numero > disponibles) {
         afficherMessage(
           "Encore un peu de patience",
@@ -395,25 +544,36 @@
 
       accueil.style.display = "none";
       message.style.display = "none";
+      galerie.style.display = "none";
       pagePhoto.style.display = "flex";
 
       photoJour.style.display = "block";
       photoJour.alt = `Souvenir du ${numero} décembre`;
       photoJour.src = cheminPhoto(numero);
 
-      /* Le cartel est affiché sous chacune des 24 photos */
-      const contenuCartel = cartels[numero] || { titre: "", texte: "" };
+      const contenuCartel = cartels[numero] || {
+        titre: "",
+        texte: ""
+      };
+
       cartelNumero.textContent =
         "FRAGMENT N°" + String(numero).padStart(2, "0");
+
       cartelTitre.textContent = contenuCartel.titre || "";
       cartelTexte.textContent = contenuCartel.texte || "";
-      cartelTitre.style.display = contenuCartel.titre ? "block" : "none";
-      cartelTexte.style.display = contenuCartel.texte ? "block" : "none";
+
+      cartelTitre.style.display =
+        contenuCartel.titre ? "block" : "none";
+
+      cartelTexte.style.display =
+        contenuCartel.texte ? "block" : "none";
+
       cartel.classList.add("visible");
 
       photoJour.onerror = function () {
         photoJour.style.display = "none";
         cartel.classList.remove("visible");
+
         afficherMessage(
           "Photo introuvable",
           "Vérifie que le fichier " + cheminPhoto(numero) +
@@ -422,12 +582,14 @@
       };
     }
 
+    /* CRÉATION DU CALENDRIER */
     function creerCalendrier() {
       const disponibles = nombreDeJoursDisponibles();
 
       positions.forEach((position, index) => {
         const numero = index + 1;
         const bouton = document.createElement("button");
+
         bouton.type = "button";
         bouton.className = "case";
         bouton.textContent = numero;
@@ -459,6 +621,40 @@
       });
     }
 
+    /* AFFICHAGE D'UNE GALERIE DE 8 PHOTOS */
+    function afficherGalerie(debut) {
+      accueil.style.display = "none";
+      pagePhoto.style.display = "none";
+      message.style.display = "none";
+      galerie.style.display = "block";
+
+      grillePhotos.innerHTML = "";
+
+      const fin = Math.min(debut + 7, 24);
+
+      galerieTitre.textContent =
+        `Photos ${debut} à ${fin}`;
+
+      for (let numero = debut; numero <= fin; numero++) {
+        const figure = document.createElement("figure");
+        figure.className = "miniature";
+
+        const image = document.createElement("img");
+        image.src = cheminPhoto(numero);
+        image.alt = `Miniature du jour ${numero}`;
+        image.loading = "eager";
+
+        const legende = document.createElement("figcaption");
+        legende.textContent =
+          "JOUR " + String(numero).padStart(2, "0");
+
+        figure.appendChild(image);
+        figure.appendChild(legende);
+        grillePhotos.appendChild(figure);
+      }
+    }
+
+    /* DÉMARRAGE */
     function demarrer() {
       const parametres = new URLSearchParams(window.location.search);
       const jourParametre = parametres.get("jour");
@@ -484,9 +680,15 @@
       }
 
       creerCalendrier();
+
+      document.querySelectorAll(".bouton-galerie").forEach((bouton) => {
+        bouton.addEventListener("click", function () {
+          const debut = Number(this.dataset.debut);
+          afficherGalerie(debut);
+        });
+      });
     }
 
     demarrer();
-  </script>
-</body>
+  </script></body>
 </html>
