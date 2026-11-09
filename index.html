@@ -478,12 +478,14 @@
     const cartelTexte = document.getElementById("cartel-texte");
 
     /*
-      MODE TEST
-      Les 24 jours sont actuellement ouverts.
-    */
-    function nombreDeJoursDisponibles() {
-      return 24;
-    }
+      function nombreDeJoursDisponibles() {
+  const maintenant = new Date();
+
+  if (maintenant.getMonth() < 10) return 0;
+  if (maintenant.getMonth() > 10) return 24;
+
+  return Math.min(24, maintenant.getDate());
+}
 
       
     /*
