@@ -755,91 +755,48 @@
        CRÉATION DU CALENDRIER
     ========================== */
 
-    function creerCalendrier() {
+    
+function creerCalendrier() {
+  const disponibles = nombreDeJoursDisponibles();
 
-      const disponibles =
-        nombreDeJoursDisponibles();
+  positions.forEach((position, index) => {
+    const numero = index + 1;
+    const bouton = document.createElement("button");
 
-      positions.forEach((position, index) => {
+    bouton.type = "button";
+    bouton.className = "case";
+    bouton.textContent = numero;
+    bouton.style.left = position[0] + "%";
+    bouton.style.top = position[1] + "%";
 
-        const numero = index + 1;
-
-        const bouton =
-          document.createElement("button");
-
-
-        bouton.type = "button";
-
-        bouton.className = "case";
-
-        // Le numéro est toujours affiché
-        bouton.textContent = numero;
-
-        bouton.style.left =
-          position[0] + "%";
-
-        bouton.style.top =
-          position[1] + "%";
-
-
-        /* Case ouverte */
-
-        if (numero <= disponibles) {
-
-          bouton.classList.add("ouverte");
-
-          bouton.setAttribute(
-            "aria-label",
-            `Ouvrir le souvenir du ${numero}`
-          );
-
-        }
-
-        /* Case verrouillée mais visible */
-
-        else {
-
-          bouton.disabled = true;
-
-          bouton.setAttribute(
-            "aria-label",
-            `Case ${numero}, disponible le ${numero} novembre`
-          );
-
-          bouton.title =
-            "Disponible le " +
-            numero +
-            " novembre";
-
-        }
-
-
-        /* Ouverture de la photo */
-
-        bouton.addEventListener(
-          "click",
-          function () {
-
-            if (
-              numero <=
-              nombreDeJoursDisponibles()
-            ) {
-
-              window.location.href =
-                "?jour=" + numero;
-
-            }
-
-          }
-        );
-
-
-        calendrier.appendChild(bouton);
-
-      });
-
+    if (numero <= disponibles) {
+      bouton.classList.add("ouverte");
+      bouton.setAttribute(
+        "aria-label",
+        `Ouvrir le souvenir du ${numero} novembre`
+      );
+    } else {
+      bouton.setAttribute(
+        "aria-label",
+        `Case ${numero}, disponible le ${numero} novembre`
+      );
+      bouton.title = `Disponible le ${numero} novembre`;
     }
 
+    bouton.addEventListener("click", function () {
+      if (numero <= nombreDeJoursDisponibles()) {
+        window.location.href = "?jour=" + numero;
+      } else {
+        afficherMessage(
+          "Encore un peu de patience",
+          `Ce souvenir sera disponible le ${numero} novembre 2026.`
+        );
+      }
+    });
+
+    calendrier.appendChild(bouton);
+  });
+}
 
     /* =========================
        DÉMARRAGE DU SITE
