@@ -773,14 +773,14 @@ function creerCalendrier() {
       bouton.classList.add("ouverte");
       bouton.setAttribute(
         "aria-label",
-        `Ouvrir le souvenir du ${numero} novembre`
+        `Ouvrir le souvenir du ${numero} décembre`
       );
     } else {
       bouton.setAttribute(
         "aria-label",
-        `Case ${numero}, disponible le ${numero} novembre`
+        `Case ${numero}, disponible le ${numero} décembre`
       );
-      bouton.title = `Disponible le ${numero} novembre`;
+      bouton.title = `Disponible le ${numero} décembre`;
     }
 
     bouton.addEventListener("click", function () {
@@ -789,7 +789,7 @@ function creerCalendrier() {
       } else {
         afficherMessage(
           "Encore un peu de patience",
-          `Ce souvenir sera disponible le ${numero} novembre 2026.`
+          `Ce souvenir sera disponible le ${numero} décembre 2026.`
         );
       }
     });
